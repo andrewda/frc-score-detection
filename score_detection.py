@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import pytesseract
+from PIL import Image
 
 TOP_LOW = np.array([215, 215, 215])
 TOP_HIGH = np.array([240, 240, 240])
@@ -16,7 +18,7 @@ def getScoreboard(img):
     return img[int(height * 0.775):height]
 
 def getScoreArea(img, scoreboard):
-    contours, _ = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours, _ = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     areas = []
     for c in contours:
@@ -33,7 +35,7 @@ def getScoreArea(img, scoreboard):
 def getTimeRemaining(scoreboard):
     red_score = cv2.inRange(scoreboard, RED_LOW, RED_HIGH)
 
-    red_contours, _ = cv2.findContours(red_score, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _, red_contours, _ = cv2.findContours(red_score, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     red_areas = []
     for c in red_contours:
@@ -51,7 +53,7 @@ def getTimeRemaining(scoreboard):
 
 cap = cv2.VideoCapture('match.mp4')
 
-pos_frame = cap.get(cv2.cv.CV_CAP_PROP_POS_FRAMES)
+pos_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
 while cap.isOpened():
     flag, frame = cap.read()
 
@@ -61,19 +63,37 @@ while cap.isOpened():
     blue_score = cv2.inRange(scoreboard, BLUE_LOW, BLUE_HIGH)
     red_score = cv2.inRange(scoreboard, RED_LOW, RED_HIGH)
 
-    kernel = np.ones((5,5),np.float32)/25
-    height, width = top_bar.shape
-    top_bar = cv2.filter2D(top_bar,-1,kernel)[0:height, 0:width/2]
+    # kernel = np.ones((5,5),np.float32)/25
+    # height, width = top_bar.shape
+    # top_bar = cv2.filter2D(top_bar,-1,kernel)[0:height, 0:width/2]
 
-    cv2.imshow('Time Remaining', getTimeRemaining(scoreboard))
-    cv2.imshow('Match', getScoreArea(top_bar, scoreboard))
-    cv2.imshow('Blue Score', getScoreArea(blue_score, scoreboard))
-    cv2.imshow('Red Score', getScoreArea(red_score, scoreboard))
+    time_remaining = getTimeRemaining(scoreboard)
+    blue_cropped = getScoreArea(blue_score, scoreboard)
+    red_cropped = getScoreArea(red_score, scoreboard)
 
-    pos_frame = cap.get(cv2.cv.CV_CAP_PROP_POS_FRAMES)
+    #cv2.imshow('Time Remaining', time_remaining)
+    #cv2.imshow('Match', getScoreArea(top_bar, scoreboard))
+    cv2.imshow('Blue Score', blue_cropped)
+    cv2.imshow('Red Score', red_cropped)
+
+    blue_score_string = pytesseract.image_to_string(Image.fromarray(blue_cropped)).strip()
+    red_score_string = pytesseract.image_to_string(Image.fromarray(red_cropped)).strip()
+
+    if not blue_score_string:
+        blue_score_string = '0'
+    if not red_score_string:
+        red_score_string = '0'
+
+    print '\nFrame: ' + str(cap.get(cv2.CAP_PROP_POS_FRAMES))
+    print 'Blue: ' + blue_score_string
+    print 'Red: ' + red_score_string
+
+    # print tesseract.mat_to_string(blue_score)
+
+    pos_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
 
     if cv2.waitKey(10) == 27:
         break
 
-    if cap.get(cv2.cv.CV_CAP_PROP_POS_FRAMES) == cap.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT):
+    if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
         break

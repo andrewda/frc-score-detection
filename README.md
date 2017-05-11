@@ -42,7 +42,7 @@ these windows will not be shown and only the data text will appear (see the
 - [x] Find red/blue score locations
 - [x] Find time remaining location
 - [x] Find match key location
-- [ ] Parse red/blue score text ([#1](https://github.com/andrewda/frc-score-detection/issues/1))
+- [x] Parse red/blue score text ([#1](https://github.com/andrewda/frc-score-detection/issues/1))
 - [ ] Parse time remaining text ([#2](https://github.com/andrewda/frc-score-detection/issues/2))
 - [ ] Parse match key text ([#3](https://github.com/andrewda/frc-score-detection/issues/3))
 - [ ] Read frames from Twitch ([#4](https://github.com/andrewda/frc-score-detection/issues/4))
