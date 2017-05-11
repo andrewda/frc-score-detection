@@ -1,0 +1,7 @@
+.DS_Store
+
+detect_numbers.py
+digits_cls.pkl
+full_match.mp4
+generate_classifier.py
+stream.jpg
