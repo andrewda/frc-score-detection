@@ -71,11 +71,12 @@ while cap.isOpened():
     blue_cropped = getScoreArea(blue_score, scoreboard)
     red_cropped = getScoreArea(red_score, scoreboard)
 
-    #cv2.imshow('Time Remaining', time_remaining)
+    cv2.imshow('Time Remaining', time_remaining)
     #cv2.imshow('Match', getScoreArea(top_bar, scoreboard))
     cv2.imshow('Blue Score', blue_cropped)
     cv2.imshow('Red Score', red_cropped)
 
+    time_remaining_string = pytesseract.image_to_string(Image.fromarray(time_remaining)).strip()
     blue_score_string = pytesseract.image_to_string(Image.fromarray(blue_cropped)).strip()
     red_score_string = pytesseract.image_to_string(Image.fromarray(red_cropped)).strip()
 
@@ -85,6 +86,7 @@ while cap.isOpened():
         red_score_string = '0'
 
     print '\nFrame: ' + str(int(cap.get(cv2.CAP_PROP_POS_FRAMES)))
+    print 'Remaining: ' + time_remaining_string
     print 'Blue: ' + blue_score_string
     print 'Red: ' + red_score_string
 
