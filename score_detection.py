@@ -53,9 +53,13 @@ def getTimeRemaining(scoreboard):
 
 cap = cv2.VideoCapture('match.mp4')
 
-pos_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
 while cap.isOpened():
-    flag, frame = cap.read()
+    # Grab every 30th frame
+    if int(cap.get(cv2.CAP_PROP_POS_FRAMES)) % 30 != 0:
+        cap.set(cv2.CAP_PROP_POS_FRAMES, cap.get(cv2.CAP_PROP_POS_FRAMES) + 1)
+        continue
+
+    _, frame = cap.read()
 
     scoreboard = getScoreboard(frame)
 
@@ -89,10 +93,6 @@ while cap.isOpened():
     print 'Remaining: ' + time_remaining_string
     print 'Blue: ' + blue_score_string
     print 'Red: ' + red_score_string
-
-    # print tesseract.mat_to_string(blue_score)
-
-    pos_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
 
     if cv2.waitKey(10) == 27:
         break
