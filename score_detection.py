@@ -84,7 +84,7 @@ while cap.isOpened():
     if not red_score_string:
         red_score_string = '0'
 
-    print '\nFrame: ' + str(cap.get(cv2.CAP_PROP_POS_FRAMES))
+    print '\nFrame: ' + str(int(cap.get(cv2.CAP_PROP_POS_FRAMES)))
     print 'Blue: ' + blue_score_string
     print 'Red: ' + red_score_string
 
