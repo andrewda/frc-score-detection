@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import pytesseract
+import re
 from PIL import Image
 
 TOP_LOW = np.array([215, 215, 215])
@@ -52,6 +53,7 @@ def getTimeRemaining(scoreboard):
 
 
 cap = cv2.VideoCapture('match.mp4')
+match_string = ''
 
 while cap.isOpened():
     # Grab every 30th frame
@@ -63,7 +65,14 @@ while cap.isOpened():
 
     scoreboard = getScoreboard(frame)
 
-    top_bar = cv2.inRange(scoreboard, TOP_LOW, TOP_HIGH)
+    if match_string == '':
+        top_bar = cv2.inRange(scoreboard, TOP_LOW, TOP_HIGH)
+        top_bar_cropped = getScoreArea(top_bar, scoreboard)
+        long_match_string = pytesseract.image_to_string(Image.fromarray(top_bar_cropped)).strip()
+        m = re.search('([a-zA-z]+) ([1-9]+)( of ...?)?', long_match_string)
+        if m is not None:
+            match_string = m.group(1) + ' ' + m.group(2)
+
     blue_score = cv2.inRange(scoreboard, BLUE_LOW, BLUE_HIGH)
     red_score = cv2.inRange(scoreboard, RED_LOW, RED_HIGH)
 
@@ -76,7 +85,6 @@ while cap.isOpened():
     red_cropped = getScoreArea(red_score, scoreboard)
 
     cv2.imshow('Time Remaining', time_remaining)
-    #cv2.imshow('Match', getScoreArea(top_bar, scoreboard))
     cv2.imshow('Blue Score', blue_cropped)
     cv2.imshow('Red Score', red_cropped)
 
@@ -90,6 +98,7 @@ while cap.isOpened():
         red_score_string = '0'
 
     print '\nFrame: ' + str(int(cap.get(cv2.CAP_PROP_POS_FRAMES)))
+    print 'Match: ' + match_string
     print 'Remaining: ' + time_remaining_string
     print 'Blue: ' + blue_score_string
     print 'Red: ' + red_score_string
