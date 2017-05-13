@@ -3,7 +3,7 @@ import numpy as np
 import pytesseract
 import re
 from PIL import Image
-
+import sys
 TOP_LOW = np.array([215, 215, 215])
 TOP_HIGH = np.array([240, 240, 240])
 
@@ -12,6 +12,75 @@ BLUE_HIGH = np.array([240, 160, 120])
 
 RED_LOW = np.array([30, 15, 170])
 RED_HIGH = np.array([80, 80, 220])
+
+frames_to_skip = 30
+
+read_link = 'match.mp4'
+
+use_stream = False
+
+def cmdsf(list, loc):
+	global frames_to_skip
+	if loc+1 < len(list):
+		frames_to_skip = int(list[loc+1])
+
+def cmdhelp(list,loc):
+	print "Usage: python score_detection.py <options>"
+	
+	print "Options:"
+	
+	print "--skipframes <number> : Sets the amount of frames skipped between reads"
+	
+	print "--help : Shows usage and options, then exits"
+	
+	print "--use_stream : Use twitch stream instead of file"
+	
+	print "--read_from <filename> : Reads from a custom filename. Reads custom url if you are scanning a Twitch stream"
+	
+	exit()
+	
+def cmdreadfrom(list,loc):
+
+	global read_link
+	
+	if loc+1 < len(list):
+	
+		read_link = str(list[loc+1])
+
+def cmdusestream(list,loc):
+
+	global use_stream
+	
+	use_stream = True
+
+cmdoptions = {
+
+ "--skipframes": cmdsf,
+ 
+ "--help" : cmdhelp,
+ 
+ "--use_stream" : cmdusestream,
+ 
+ "--read_from" : cmdreadfrom
+}
+
+def parseCommandArgs():
+
+	cmdlist = sys.argv[1:len(sys.argv)]
+	
+	if len(cmdlist) == 0:
+	
+		print "Usage: python score_detection.py <options>"
+		
+		print "Use the --help option to get a list of possible options."
+		
+		exit()
+		
+	for i in range(0,len(cmdlist)):
+	
+		if str(cmdlist[i]) in cmdoptions.keys():
+		
+			cmdoptions[cmdlist[i]](cmdlist,i)
 
 def getScoreboard(img):
     height, width, channels = img.shape
@@ -51,14 +120,20 @@ def getTimeRemaining(scoreboard):
 
     return scoreboard[(height-h)/2:height-y, x:x+(2*w)]
 
+parseCommandArgs()
+if use_stream:
+	print "Twitch Streaming is not supported yet."
+	exit()
 
-cap = cv2.VideoCapture('match.mp4')
+cap = cv2.VideoCapture(read_link)
+
 match_string = ''
 
 while cap.isOpened():
-    # Grab every 30th frame
-    if int(cap.get(cv2.CAP_PROP_POS_FRAMES)) % 30 != 0:
-        cap.set(cv2.CAP_PROP_POS_FRAMES, cap.get(cv2.CAP_PROP_POS_FRAMES) + 1)
+    # Grab every (frames to skip) frames
+    if int(cap.get(cv2.CAP_PROP_POS_FRAMES)) % frames_to_skip != 0:
+        #cap.set(cv2.CAP_PROP_POS_FRAMES, cap.get(cv2.CAP_PROP_POS_FRAMES) + 1)
+        cap.read() #This option is less prone to errors/weird stuff
         continue
 
     _, frame = cap.read()
