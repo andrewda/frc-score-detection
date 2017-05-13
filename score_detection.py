@@ -117,7 +117,7 @@ match_string = ''
 while cap.isOpened():
     # Grab every (frames to skip) frames
     if int(cap.get(cv2.CAP_PROP_POS_FRAMES)) % frames_to_skip != 0:
-        cap.set(cv2.CAP_PROP_POS_FRAMES, cap.get(cv2.CAP_PROP_POS_FRAMES) + 1)
+        cap.read()
         continue
 
     _, frame = cap.read()
