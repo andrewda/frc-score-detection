@@ -1,3 +1,4 @@
+import sys
 
 frames_to_skip = 30
 
@@ -68,13 +69,13 @@ def parseCommandArgs():
 		
 			cmdoptions[cmdlist[i]](cmdlist,i)
 
+parseCommandArgs()
 
 import cv2
 import numpy as np
 import pytesseract
 import re
 from PIL import Image
-import sys
 
 TOP_LOW = np.array([215, 215, 215])
 TOP_HIGH = np.array([240, 240, 240])
@@ -122,7 +123,7 @@ def getTimeRemaining(scoreboard):
 
     return scoreboard[(height-h)/2:height-y, x:x+(2*w)]
 
-parseCommandArgs()
+
 if use_stream:
 	print "Twitch Streaming is not supported yet."
 	exit()
