@@ -7,38 +7,38 @@ read_link = 'match.mp4'
 use_stream = False
 
 def cmdsf(list, loc):
-	global frames_to_skip
-	if loc+1 < len(list):
-		frames_to_skip = int(list[loc+1])
+ global frames_to_skip
+ if loc+1 < len(list):
+  frames_to_skip = int(list[loc+1])
 
 def cmdhelp(list,loc):
-	print "Usage: python score_detection.py <options>"
-	
-	print "Options:"
-	
-	print "--skipframes <number> : Sets the amount of frames skipped between reads"
-	
-	print "--help : Shows usage and options, then exits"
-	
-	print "--use_stream : Use twitch stream instead of file"
-	
-	print "--read_from <filename> : Reads from a custom filename. Reads custom url if you are scanning a Twitch stream"
-	
-	exit()
-	
+ print "Usage: python score_detection.py <options>"
+ 
+ print "Options:"
+ 
+ print "--skipframes <number> : Sets the amount of frames skipped between reads"
+ 
+ print "--help : Shows usage and options, then exits"
+ 
+ print "--use_stream : Use twitch stream instead of file"
+ 
+ print "--read_from <filename> : Reads from a custom filename. Reads custom url if you are scanning a Twitch stream"
+ 
+ exit()
+ 
 def cmdreadfrom(list,loc):
 
-	global read_link
-	
-	if loc+1 < len(list):
-	
-		read_link = str(list[loc+1])
+ global read_link
+ 
+ if loc+1 < len(list):
+ 
+  read_link = str(list[loc+1])
 
 def cmdusestream(list,loc):
 
-	global use_stream
-	
-	use_stream = True
+ global use_stream
+ 
+ use_stream = True
 
 cmdoptions = {
 
@@ -53,21 +53,16 @@ cmdoptions = {
 
 def parseCommandArgs():
 
-	cmdlist = sys.argv[1:len(sys.argv)]
-	
-	if len(cmdlist) == 0:
-	
-		print "Usage: python score_detection.py <options>"
-		
-		print "Use the --help option to get a list of possible options."
-		
-		exit()
-		
-	for i in range(0,len(cmdlist)):
-	
-		if str(cmdlist[i]) in cmdoptions.keys():
-		
-			cmdoptions[cmdlist[i]](cmdlist,i)
+ cmdlist = sys.argv[1:len(sys.argv)]
+ 
+ if len(cmdlist) == 0:
+  print "Usage: python score_detection.py <options>"
+  print "Use the --help option to get a list of possible options."
+  exit()
+  
+ for i in range(0,len(cmdlist)):
+  if str(cmdlist[i]) in cmdoptions.keys():
+   cmdoptions[cmdlist[i]](cmdlist,i)
 
 parseCommandArgs()
 
@@ -125,8 +120,8 @@ def getTimeRemaining(scoreboard):
 
 
 if use_stream:
-	print "Twitch Streaming is not supported yet."
-	exit()
+ print "Twitch Streaming is not supported yet."
+ exit()
 
 cap = cv2.VideoCapture(read_link)
 
