@@ -5,7 +5,8 @@
 This is a Python program that uses OpenCV to read data (such as scores, time
 remaining, match number, etc.) from the scoreboard on FRC livestreams. This will
 allow us to get live updates on matches and allows us to know when a match finishes
-before the API officially reports them.
+before the API officially reports them. It has almost a 100% accuracy in reading
+scores and remaining time from images thanks to [Tesseract](https://github.com/tesseract-ocr/tesseract).
 
 ## Running Score Detector
 
