@@ -4,16 +4,16 @@
 
 This is a Python program that uses OpenCV to read data (such as scores, time
 remaining, match number, etc.) from the scoreboard on FRC livestreams. This will
-allow us to get live updates on matches and allows us to know when a match finishes
-before the API officially reports them. It has almost a 100% accuracy in reading
-scores and remaining time from images thanks to [Tesseract](https://github.com/tesseract-ocr/tesseract).
+allow us to get live updates on matches and allows us to know when a match
+finishes before the API officially reports them. It has almost a 100% accuracy
+in reading scores and remaining time from images thanks to [Tesseract](https://github.com/tesseract-ocr/tesseract).
 
 ## Running Score Detector
 
 ### Installing dependencies
 
-I recommend using conda (either Anaconda or Miniconda) to install the dependencies.
-Once you install conda, run the following commands:
+I recommend using conda (either Anaconda or Miniconda) to install the
+dependencies. Once you install conda, run the following commands:
 
 ```bash
 $ conda install opencv
@@ -22,8 +22,8 @@ $ conda install numpy
 
 ### Downloading Sample Data
 
-Before running the score detector, you'll need a match video (in the future, we'll
-allow Twitch links). You can download one [here](https://drive.google.com/file/d/0B3rF-u0VGg5oTHYwajlaX1lQQjA/view?usp=sharing).
+Before running the score detector, you'll need a match video (in the future,
+we'll allow Twitch links). You can download one [here](https://drive.google.com/file/d/0B3rF-u0VGg5oTHYwajlaX1lQQjA/view?usp=sharing).
 Rename this video to `match.mp4` and put it in the source directory.
 
 ### Running
@@ -34,9 +34,9 @@ To run the program, use the following command:
 $ python score_detection.py
 ```
 
-A few windows should open up containing the data we want to gather. In the future,
-these windows will not be shown and only the data text will appear (see the
-[TODO](#todo) below)
+A few windows should open up containing the data we want to gather. In the
+future, these windows will not be shown and only the data text will appear (see
+the [TODO](#todo) below).
 
 ## TODO
 
