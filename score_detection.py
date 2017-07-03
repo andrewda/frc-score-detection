@@ -14,6 +14,12 @@ BLUE_HIGH = np.array([240, 160, 120])
 RED_LOW = np.array([30, 15, 170])
 RED_HIGH = np.array([80, 80, 220])
 
+TEXT_WHITE_LOW = np.array([200, 200, 200])
+TEXT_WHITE_HIGH = np.array([255, 255, 255])
+
+TEXT_BLACK_LOW = np.array([0, 0, 0])
+TEXT_BLACK_HIGH = np.array([110, 110, 110])
+
 frames_to_skip = 30
 
 read_link = 'match.mp4'
@@ -100,10 +106,13 @@ def getTimeRemaining(scoreboard):
 
     red_largest = sorted_red_areas[0][1]
 
-    height, width, channels = scoreboard.shape
+    height, width = scoreboard.shape[:2]
     x, y, w, h = cv2.boundingRect(red_largest)
 
-    return scoreboard[(height-h)/2:height-y, x:x+(2*w)]
+    cropped = scoreboard[(height-h)/2:height-y, x:x+(2*w)]
+    height, width = cropped.shape[:2]
+
+    return cropped[height*0.05:height*0.9, width/2-width/6:width/2+width/6]
 
 parseCommandArgs()
 if use_stream:
@@ -142,6 +151,10 @@ while cap.isOpened():
     time_remaining = getTimeRemaining(scoreboard)
     blue_cropped = getScoreArea(blue_score, scoreboard)
     red_cropped = getScoreArea(red_score, scoreboard)
+
+    time_remaining = cv2.inRange(time_remaining, TEXT_BLACK_LOW, TEXT_BLACK_HIGH)
+    blue_cropped = cv2.inRange(blue_cropped, TEXT_WHITE_LOW, TEXT_WHITE_HIGH)
+    red_cropped = cv2.inRange(red_cropped, TEXT_WHITE_LOW, TEXT_WHITE_HIGH)
 
     cv2.imshow('Time Remaining', time_remaining)
     cv2.imshow('Blue Score', blue_cropped)
