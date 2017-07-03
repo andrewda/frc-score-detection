@@ -47,4 +47,6 @@ the [TODO](#todo) below).
 - [x] Parse time remaining text ([#2](https://github.com/andrewda/frc-score-detection/issues/2))
 - [x] Parse match key text ([#3](https://github.com/andrewda/frc-score-detection/issues/3))
 - [ ] Read frames from Twitch ([#4](https://github.com/andrewda/frc-score-detection/issues/4))
-- [ ] Export conda environment file ([#5](https://github.com/andrewda/frc-score-detection/issues/5))
+- ~~[ ] Export conda environment file ([#5](https://github.com/andrewda/frc-score-detection/issues/5))~~
+- [ ] Move away from conda ([#13](https://github.com/andrewda/frc-score-detection/issues/13))
+- [ ] Create Docker environment ([#14](https://github.com/andrewda/frc-score-detection/issues/14))
