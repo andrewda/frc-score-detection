@@ -160,9 +160,9 @@ while cap.isOpened():
     cv2.imshow('Blue Score', blue_cropped)
     cv2.imshow('Red Score', red_cropped)
 
-    time_remaining_string = pytesseract.image_to_string(Image.fromarray(time_remaining)).strip()
-    blue_score_string = pytesseract.image_to_string(Image.fromarray(blue_cropped)).strip()
-    red_score_string = pytesseract.image_to_string(Image.fromarray(red_cropped)).strip()
+    time_remaining_string = pytesseract.image_to_string(Image.fromarray(time_remaining), config='--psm 8 digits').strip()
+    blue_score_string = pytesseract.image_to_string(Image.fromarray(blue_cropped), config='--psm 8 digits').strip()
+    red_score_string = pytesseract.image_to_string(Image.fromarray(red_cropped), config='--psm 8 digits').strip()
 
     if not blue_score_string:
         blue_score_string = '0'
