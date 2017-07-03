@@ -8,6 +8,23 @@ allow us to get live updates on matches and allows us to know when a match
 finishes before the API officially reports them. It has almost a 100% accuracy
 in reading scores and remaining time from images thanks to [Tesseract](https://github.com/tesseract-ocr/tesseract).
 
+For example, take the following scene:
+
+![Example Scene](screenshots/scene.png)
+
+At this frame (which is frame 1860 in the example file below), the program will
+display the following data:
+
+```text
+Frame: 1860
+Match: Qualification 16
+Remaining: 88
+Blue: 113
+Red: 115
+```
+
+Pretty good!
+
 ## Running Score Detector
 
 ### Installing dependencies
