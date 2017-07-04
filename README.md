@@ -23,7 +23,7 @@ Blue: 113
 Red: 115
 ```
 
-Pretty good!
+[That's pretty good!](https://www.youtube.com/watch?v=JeimE8Wz6e4)
 
 ## Running Score Detector
 
