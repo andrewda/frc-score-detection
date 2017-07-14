@@ -16,7 +16,7 @@ vid_file = open(fname, 'wb')
 
 # Buffer video
 fd = stream.open()
-for i in range(0, 256):
+for i in range(0, 512):
     new_bytes = fd.read(1024)
     vid_file.write(new_bytes)
 
