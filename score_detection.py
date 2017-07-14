@@ -3,7 +3,7 @@ import os
 import streamlink
 from livescore import Livescore
 
-url = 'http://www.twitch.tv/firstwa_blue'
+url = 'http://www.twitch.tv/firstinspires1'
 
 # Create new Livescore instance
 frc = Livescore()
