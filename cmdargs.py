@@ -6,12 +6,12 @@ frameskipratevalue = 1
 def help():
     print "Command line arguments:"
     print "--------------------------"
-    print "'--help': displays information about command line arguments"
+    print "'--help': Displays information about command line arguments"
     print "'--readfromfile' <file> : Processes data from a video file named <file>"
-    print "'--frameskiprate' <number>: sets "
+    print "'--frameskiprate' <number>: Sets the amount of frames skipped per scan to <number>"
+    print "'version' : Displays current version"
     exit(0)
 def readfromfile(fname):
-    print "called"
     globals()["fileread"] = True
     globals()["readfrom"] = fname
 def frameskiprate(rate):

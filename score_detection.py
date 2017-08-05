@@ -51,6 +51,5 @@ else:
         score_data = frc.read(img)
 
         print score_data
-        cv2.imshow('Livestream', img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
